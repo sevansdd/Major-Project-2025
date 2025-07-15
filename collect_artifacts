@@ -1,0 +1,24 @@
+import psutil, json, socket
+import os
+
+def collect_processes():
+    return [proc.info for proc in psutil.process_iter(['pid', 'name', 'username', 'cpu_percent'])]
+
+def collect_network():
+    conns = psutil.net_connections()
+    return [{
+        'pid': c.pid, 'laddr': f"{c.laddr.ip}:{c.laddr.port}",
+        'raddr': f"{c.raddr.ip}:{c.raddr.port}" if c.raddr else 'N/A',
+        'status': c.status
+    } for c in conns if c.raddr]
+
+def main():
+    os.makedirs("artifacts", exist_ok=True)
+    with open("artifacts/processes.json", "w") as f:
+        json.dump(collect_processes(), f, indent=4)
+    with open("artifacts/network.json", "w") as f:
+        json.dump(collect_network(), f, indent=4)
+    print("✅ Artifacts Collected.")
+
+if __name__ == "__main__":
+    main()
