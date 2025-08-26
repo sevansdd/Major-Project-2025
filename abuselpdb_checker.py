@@ -1,8 +1,11 @@
 import requests
 import psutil
 import time
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-API_KEY = "384d3dec38e03f51a63f102f289c503293a5c259691fe2d0f2c70e0e12dbe24371fde7e0dd669214"
+API_KEY = os.getenv("ABUSEIPDB_API_KEY") 
 
 def check_ip(ip):
     url = "https://api.abuseipdb.com/api/v2/check"

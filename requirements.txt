@@ -1,0 +1,8 @@
+pandas
+scikit-learn
+psutil
+python-dotenv
+streamlit
+fpdf
+matplotlib
+requests
